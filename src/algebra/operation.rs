@@ -19,3 +19,20 @@ pub trait Invertible {}
 
 /// ∀ a, b, c ∈ S, a · (b + c) = (a · b) + (a · c), (b + c) · a = (b · a) + (c · a)
 pub trait Distributive<Add: Op> {}
+
+pub struct Addition;
+impl Op for Addition {}
+impl Closure for Addition {}
+impl Associative for Addition {}
+impl Commutative for Addition {}
+impl Identity for Addition {}
+impl Invertible for Addition {}
+
+pub struct Multiplication;
+impl Op for Multiplication {}
+impl Closure for Multiplication {}
+impl Associative for Multiplication {}
+impl Commutative for Multiplication {}
+impl Identity for Multiplication {}
+impl Invertible for Multiplication {}
+impl Distributive<Addition> for Multiplication {}

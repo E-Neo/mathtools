@@ -1,34 +1,33 @@
 use crate::algebra::{
     operation::{Associative, Closure, Commutative, Distributive, Identity, Invertible, Op},
-    structure::CommutativeRing,
+    structure::AbstractCommutativeRing,
 };
 
-/// A Field is a [CommutativeRing](trait.CommutativeRing.html)
-/// where each non-zero element is multiplicative invertible.
-pub trait Field<
+/// A Field is a CommutativeRing where each non-zero element is multiplicative invertible.
+pub trait AbstractField<
     Add: Op + Closure + Associative + Identity + Invertible + Commutative,
     Mul: Op + Closure + Associative + Identity + Distributive<Add> + Commutative + Invertible,
->: CommutativeRing<Add, Mul>
+>: AbstractCommutativeRing<Add, Mul>
 {
+    fn add(&self, rhs: &Self) -> Self {
+        AbstractCommutativeRing::add(self, rhs)
+    }
+
     fn zero() -> Self {
-        CommutativeRing::zero()
+        AbstractCommutativeRing::zero()
     }
 
-    fn add(self, rhs: Self) -> Self {
-        CommutativeRing::add(self, rhs)
+    fn neg(&self) -> Self {
+        AbstractCommutativeRing::neg(self)
     }
 
-    fn neg(self) -> Self {
-        CommutativeRing::neg(self)
+    fn mul(&self, rhs: &Self) -> Self {
+        AbstractCommutativeRing::mul(self, rhs)
     }
 
     fn one() -> Self {
-        CommutativeRing::one()
+        AbstractCommutativeRing::one()
     }
 
-    fn mul(self, rhs: Self) -> Self {
-        CommutativeRing::mul(self, rhs)
-    }
-
-    fn recip(self) -> Self;
+    fn recip(&self) -> Self;
 }

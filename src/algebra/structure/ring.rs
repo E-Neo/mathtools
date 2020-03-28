@@ -1,33 +1,33 @@
 use crate::algebra::{
     operation::{Associative, Closure, Commutative, Distributive, Identity, Invertible, Op},
-    structure::{AbelianGroup, Monoid},
+    structure::{AbstractAbelianGroup, AbstractMonoid},
 };
 
-/// A Ring is an [AbelianGroup](trait.AbelianGroup.html) under addition,
-/// a [Monoid](trait.Monoid.html) under multiplication,
+/// A Ring is an AbelianGroup under addition,
+/// a Monoid under multiplication,
 /// and multiplication is distributive with respect to addition.
-pub trait Ring<
+pub trait AbstractRing<
     Add: Op + Closure + Associative + Identity + Invertible + Commutative,
     Mul: Op + Closure + Associative + Identity + Distributive<Add>,
->: AbelianGroup<Add> + Monoid<Mul>
+>: AbstractAbelianGroup<Add> + AbstractMonoid<Mul>
 {
+    fn add(&self, rhs: &Self) -> Self {
+        AbstractAbelianGroup::op(self, rhs)
+    }
+
     fn zero() -> Self {
-        AbelianGroup::id()
+        AbstractAbelianGroup::id()
     }
 
-    fn add(self, rhs: Self) -> Self {
-        AbelianGroup::op(self, rhs)
+    fn neg(&self) -> Self {
+        AbstractAbelianGroup::inv(self)
     }
 
-    fn neg(self) -> Self {
-        AbelianGroup::inv(self)
+    fn mul(&self, rhs: &Self) -> Self {
+        AbstractMonoid::<Mul>::op(self, rhs)
     }
 
     fn one() -> Self {
-        Monoid::<Mul>::id()
-    }
-
-    fn mul(self, rhs: Self) -> Self {
-        Monoid::<Mul>::op(self, rhs)
+        AbstractMonoid::<Mul>::id()
     }
 }

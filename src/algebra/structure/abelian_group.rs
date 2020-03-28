@@ -1,21 +1,21 @@
 use crate::algebra::{
     operation::{Associative, Closure, Commutative, Identity, Invertible, Op},
-    structure::Group,
+    structure::AbstractGroup,
 };
 
-/// A AbelianGroup is a [Group](trait.Group.html) where the operation is commutative.
-pub trait AbelianGroup<O: Op + Closure + Associative + Identity + Invertible + Commutative>:
-    Group<O>
+/// A AbelianGroup is a Group where the operation is commutative.
+pub trait AbstractAbelianGroup<O: Op + Closure + Associative + Identity + Invertible + Commutative>:
+    AbstractGroup<O>
 {
+    fn op(&self, rhs: &Self) -> Self {
+        AbstractGroup::op(self, rhs)
+    }
+
     fn id() -> Self {
-        Group::id()
+        AbstractGroup::id()
     }
 
-    fn op(self, rhs: Self) -> Self {
-        Group::op(self, rhs)
-    }
-
-    fn inv(self) -> Self {
-        Group::inv(self)
+    fn inv(&self) -> Self {
+        AbstractGroup::inv(self)
     }
 }

@@ -1,17 +1,19 @@
 use crate::algebra::{
     operation::{Associative, Closure, Identity, Invertible, Op},
-    structure::Monoid,
+    structure::AbstractMonoid,
 };
 
-/// A group is a [Monoid](trait.Monoid.html) each of whose elements is invertible.
-pub trait Group<O: Op + Closure + Associative + Identity + Invertible>: Monoid<O> {
+/// A group is a Monoid each of whose elements is invertible.
+pub trait AbstractGroup<O: Op + Closure + Associative + Identity + Invertible>:
+    AbstractMonoid<O>
+{
+    fn op(&self, rhs: &Self) -> Self {
+        AbstractMonoid::op(self, rhs)
+    }
+
     fn id() -> Self {
-        Monoid::id()
+        AbstractMonoid::id()
     }
 
-    fn op(self, rhs: Self) -> Self {
-        Monoid::op(self, rhs)
-    }
-
-    fn inv(self) -> Self;
+    fn inv(&self) -> Self;
 }

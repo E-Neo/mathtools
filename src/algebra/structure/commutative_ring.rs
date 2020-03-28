@@ -1,31 +1,31 @@
 use crate::algebra::{
     operation::{Associative, Closure, Commutative, Distributive, Identity, Invertible, Op},
-    structure::Ring,
+    structure::AbstractRing,
 };
 
-/// A CommutativeRing is a [Ring](trait.Ring.html) where the multiplication is commutative.
-pub trait CommutativeRing<
+/// A CommutativeRing is a Ring where the multiplication is commutative.
+pub trait AbstractCommutativeRing<
     Add: Op + Closure + Associative + Identity + Invertible + Commutative,
     Mul: Op + Closure + Associative + Identity + Distributive<Add> + Commutative,
->: Ring<Add, Mul>
+>: AbstractRing<Add, Mul>
 {
     fn zero() -> Self {
-        Ring::zero()
+        AbstractRing::zero()
     }
 
-    fn add(self, rhs: Self) -> Self {
-        Ring::add(self, rhs)
+    fn add(&self, rhs: &Self) -> Self {
+        AbstractRing::add(self, rhs)
     }
 
-    fn neg(self) -> Self {
-        Ring::neg(self)
+    fn neg(&self) -> Self {
+        AbstractRing::neg(self)
     }
 
     fn one() -> Self {
-        Ring::one()
+        AbstractRing::one()
     }
 
-    fn mul(self, rhs: Self) -> Self {
-        Ring::mul(self, rhs)
+    fn mul(&self, rhs: &Self) -> Self {
+        AbstractRing::mul(self, rhs)
     }
 }

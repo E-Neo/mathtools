@@ -1,11 +1,11 @@
 use crate::algebra::{
     operation::{Associative, Closure, Op},
-    structure::Magma,
+    structure::AbstractMagma,
 };
 
-/// A Semigroup is a [Magma](trait.Magma.html) where the operation is associative.
-pub trait Semigroup<O: Op + Closure + Associative>: Magma<O> {
-    fn op(self, rhs: Self) -> Self {
-        Magma::op(self, rhs)
+/// A Semigroup is a Magma where the operation is associative.
+pub trait AbstractSemigroup<O: Op + Closure + Associative>: AbstractMagma<O> {
+    fn op(&self, rhs: &Self) -> Self {
+        AbstractMagma::op(self, rhs)
     }
 }
