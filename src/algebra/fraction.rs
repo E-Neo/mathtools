@@ -36,6 +36,7 @@ pub trait AbstractFraction<T: Term>: AbstractField<Addition, Multiplication> {
     }
 }
 
+#[derive(Debug)]
 pub struct Fraction<T: Term> {
     numer: T,
     denom: T,
